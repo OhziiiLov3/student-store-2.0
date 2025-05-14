@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const productRoutes = require("./routes/productRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 require("dotenv").config(); 
 
 const PORT = 3000;
@@ -17,6 +18,7 @@ app.get("/",(req,res)=>{
 
 
 app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
 
 
 
