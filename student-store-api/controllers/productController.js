@@ -22,13 +22,42 @@ const createProduct = async (req, res) => {
 
 // get all products
 const getAllProducts = async (req, res) => {
+
+  // try {
+  //   const products = await prisma.product.findMany();
+  //   console.log(products);
+  //   res.json(products);
+  // } catch (error) {
+  //   res.status(500).json({ error: error.message });
+  // }
+   const { sort, category } = req.query;
+
+  let filters = {};
+  if (category) {
+    filters.category = {
+       equals: category,
+       mode: "insensitive"
+    };
+  }
+
+  let orderBy = {};
+  if (sort === "price") {
+    orderBy.price = "asc";
+  } else if (sort === "name") {
+    orderBy.name = "asc";
+  }
+
   try {
-    const products = await prisma.product.findMany();
-    console.log(products);
+    const products = await prisma.product.findMany({
+      where: filters,
+      orderBy: Object.keys(orderBy).length ? orderBy : undefined,
+    });
     res.json(products);
+    console.log(products);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+
 };
 
 // get product by id
