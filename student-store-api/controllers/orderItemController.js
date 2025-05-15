@@ -24,14 +24,16 @@ const createOrderItem = async (req, res) => {
 
 // Get all items for a order
 const getOrderItemsByOrderId = async (req, res) => {
-  const { orderId } = req.params;
-
+   const { orderId } = req.params;
   try {
-    const items = await prisma.orderItem.findMany({
-      where: { orderId: parseInt(id) },
-      include: { product: true },
+    const orderItem = await prisma.orderItem.findMany({
+      where: { orderId: parseInt(orderId) },
     });
-    res.json(items);
+    if (orderItem) {
+      res.json(orderItem);
+    } else {
+      res.status(404).json({ error: "Order item not found" });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

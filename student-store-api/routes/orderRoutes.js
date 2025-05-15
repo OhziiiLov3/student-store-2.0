@@ -9,4 +9,8 @@ router.get('/:id', orderController.getOrderById);
 router.put("/:id", orderController.updateOrder);
 router.delete("/:id", orderController.deleteOrder);
 
+// custom endpoints to add items and total
+router.post("/:orderId/items", orderController.addItemToOrder);
+router.get("/:orderId/total", orderController.calculateOrderTotal);
+
 module.exports = router;
