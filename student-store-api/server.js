@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
@@ -7,6 +8,7 @@ require("dotenv").config();
 
 const PORT = 3000;
 
+app.use(cors());
 // middleware
 app.use(express.json());
 
