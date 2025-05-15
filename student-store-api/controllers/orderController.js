@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const { get } = require("../routes/productRoutes");
+// const { get } = require("../routes/productRoutes");
 const prisma = new PrismaClient();
 
 
@@ -44,6 +44,11 @@ const getOrderById = async (req,res)=>{
   try {
     const order = await prisma.order.findUnique({
       where: { orderId: parseInt(id) },
+    include: {
+        orderItems: {
+          include: { product: true },
+        },
+    },
     });
 
     if (!order) return res.status(404).json({ error: "Order not found." });
